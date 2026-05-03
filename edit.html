@@ -3,22 +3,82 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modifica Dati</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #00645a;
+      color: #333;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      text-align: center;
+      color: #00645a;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin: 10px 0 5px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-weight: bold;
+      margin-top: 20px;
+      background: #00645a;
+      color: white;
+    }
+  </style>
 </head>
 
-<body style="font-family: Arial; padding:20px;">
+<body>
 
-<h2><input id="nomeCane"></h2>
+<div class="container">
 
-<p>Proprietario: <input id="nomeProp"></p>
-<p>Telefono: <input id="telefono"></p>
-<p>Info mediche: <input id="mediche"></p>
-<p>Note: <input id="note"></p>
+  <h2><input id="nomeCane" placeholder="Nome cane"></h2>
 
-<br>
+  <p>👤 Proprietario:</p>
+  <input id="nomeProp">
 
-<button onclick="salvaDati()" style="padding:10px; background:#00645a; color:white; border:none; border-radius:8px;">
-  Salva
-</button>
+  <p>📞 Telefono:</p>
+  <input id="telefono">
+
+  <p>💊 Info mediche:</p>
+  <input id="mediche">
+
+  <p>📝 Note:</p>
+  <input id="note">
+
+  <button onclick="salvaDati()">Salva</button>
+
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
@@ -53,13 +113,13 @@ async function caricaDati() {
 
   dati = snap.data();
 
-  // 🔐 controllo accesso
+  // 🔐 BLOCCO ACCESSO
   if (dati.key !== keyUrl) {
     document.body.innerHTML = "Accesso negato";
     return;
   }
 
-  // riempi input
+  // riempie i campi
   document.getElementById("nomeCane").value = dati.nomeCane || "";
   document.getElementById("nomeProp").value = dati.proprietario || "";
   document.getElementById("telefono").value = dati.telefono || "";
@@ -76,7 +136,7 @@ async function salvaDati() {
     telefono: document.getElementById("telefono").value,
     mediche: document.getElementById("mediche").value,
     note: document.getElementById("note").value,
-    key: dati.key // NON perderla
+    key: dati.key // NON perderla o ti autodistruggi
   });
 
   alert("Dati salvati");
