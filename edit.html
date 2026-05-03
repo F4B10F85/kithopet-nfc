@@ -137,6 +137,12 @@ async function caricaDati() {
 }
 
 async function salvaDati() {
+
+  if (!dati || dati.key !== keyUrl) {
+    alert("Non autorizzato");
+    return;
+  }
+
   const ref = doc(db, "pets", id);
 
   await setDoc(ref, {
@@ -145,9 +151,9 @@ async function salvaDati() {
     telefono: document.getElementById("telefono").value,
     mediche: document.getElementById("mediche").value,
     note: document.getElementById("note").value,
-    document.getElementById("lat").value = dati.lat || "",
-    document.getElementById("lng").value = dati.lng || "",
-    key: dati.key // NON perderla o ti autodistruggi
+    lat: parseFloat(document.getElementById("lat").value) || null,
+    lng: parseFloat(document.getElementById("lng").value) || null,
+    key: dati.key
   });
 
   alert("Dati salvati");
