@@ -14,16 +14,23 @@
 <p><b>Info mediche:</b> <span id="mediche"></span></p>
 <p><b>Note:</b> <span id="note"></span></p>
 
-<a id="chiamaBtn">📞 Chiama proprietario</a>
-  
+<br>
+
+<a id="chiamaBtn" style="display:inline-block; padding:10px; background:#00645a; color:white; border-radius:8px; text-decoration:none;">
+  📞 Chiama proprietario
+</a>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSy...",
+  apiKey: "AIzaSyBGc8ySEGePDVQi9jZyjyCwETMSdF__rGk",
   authDomain: "kithopet-nfc.firebaseapp.com",
   projectId: "kithopet-nfc",
+  storageBucket: "kithopet-nfc.firebasestorage.app",
+  messagingSenderId: "225319373501",
+  appId: "1:225319373501:web:0b1b722101e2cdce0205d4"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -43,28 +50,26 @@ async function caricaDati() {
 
   const dati = snap.data();
 
-// 🔥 QUI gestisci il bottone
-const btn = document.getElementById("chiamaBtn");
+  // dati
+  document.getElementById("nomeCane").innerText = dati.nomeCane || "";
+  document.getElementById("nomeProp").innerText = dati.proprietario || "";
+  document.getElementById("telefono").innerText = dati.telefono || "";
+  document.getElementById("mediche").innerText = dati.mediche || "";
+  document.getElementById("note").innerText = dati.note || "";
 
-if (dati.telefono) {
-  btn.href = "tel:" + dati.telefono;
-} else {
-  btn.innerText = "Numero non disponibile";
-  btn.style.pointerEvents = "none";
-  btn.style.opacity = "0.5";
-}
+  // bottone chiamata
+  const btn = document.getElementById("chiamaBtn");
 
-// resto dei dati
-document.getElementById("nomeCane").innerText = dati.nomeCane || "";
-document.getElementById("nomeProp").innerText = dati.proprietario || "";
-document.getElementById("telefono").innerText = dati.telefono || "";
-document.getElementById("mediche").innerText = dati.mediche || "";
-document.getElementById("note").innerText = dati.note || "";
+  if (dati.telefono) {
+    btn.href = "tel:" + dati.telefono;
+  } else {
+    btn.innerText = "Numero non disponibile";
+    btn.style.pointerEvents = "none";
+    btn.style.opacity = "0.5";
+  }
 }
 
 caricaDati();
-
-document.getElementById("chiamaBtn").href = "tel:" + dati.telefono;  
 </script>
 
 </body>
