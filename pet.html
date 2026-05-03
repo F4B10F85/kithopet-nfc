@@ -1,98 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #00645a;
-  color: #333;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dati Animale</title>
 
-/* CONTENITORE */
-.container {
-  max-width: 400px;
-  margin: 40px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #00645a;
+      color: #333;
+    }
 
-/* TITOLO */
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #00645a;
-}
+    .container {
+      max-width: 400px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
 
-/* CAMPI */
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-}
+    h2 {
+      text-align: center;
+      color: #00645a;
+      font-size: 24px;
+    }
 
-/* TESTO LETTURA */
-span {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
+    p {
+      margin: 10px 0 5px;
+      font-size: 13px;
+      color: #666;
+    }
 
-/* BOTTONI */
-button, a {
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding: 12px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 15px;
-}
+    span {
+      display: block;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #000;
+    }
 
-/* SALVA */
-button {
-  background: #00645a;
-  color: white;
-  border: none;
-}
-
-/* CHIAMA */
-#chiamaBtn {
-  background: #00a884;
-  color: white;
-}
-
-/* LABEL */
-p {
-  margin: 10px 0 5px;
-  font-size: 13px;
-  color: #666;
-}
-</style>
+    a {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 20px;
+      background: #ff3b30;
+      color: white;
+    }
+  </style>
 </head>
 
-<body style="font-family: Arial; padding:20px;">
+<body>
 
-<h2 id="nomeCane"></h2>
+<div class="container">
 
-<p><b>Proprietario:</b> <span id="nomeProp"></span></p>
-<p><b>Telefono:</b> <span id="telefono"></span></p>
-<p><b>Info mediche:</b> <span id="mediche"></span></p>
-<p><b>Note:</b> <span id="note"></span></p>
+  <h2 id="nomeCane">...</h2>
 
-<br>
+  <p>🐶 Proprietario:</p>
+  <span id="nomeProp"></span>
 
-<a id="chiamaBtn" style="display:inline-block; padding:10px; background:#00645a; color:white; border-radius:8px; text-decoration:none;">
-  📞 Chiama proprietario
-</a>
+  <p>📞 Telefono:</p>
+  <span id="telefono"></span>
+
+  <p>❤️ Info mediche:</p>
+  <span id="mediche"></span>
+
+  <p>📝 Note:</p>
+  <span id="note"></span>
+
+  <a id="chiamaBtn">📞 Chiama proprietario</a>
+
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
@@ -124,14 +107,12 @@ async function caricaDati() {
 
   const dati = snap.data();
 
-  // dati
   document.getElementById("nomeCane").innerText = dati.nomeCane || "";
   document.getElementById("nomeProp").innerText = dati.proprietario || "";
   document.getElementById("telefono").innerText = dati.telefono || "";
   document.getElementById("mediche").innerText = dati.mediche || "";
   document.getElementById("note").innerText = dati.note || "";
 
-  // bottone chiamata
   const btn = document.getElementById("chiamaBtn");
 
   if (dati.telefono) {
