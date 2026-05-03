@@ -14,39 +14,44 @@
 <p><b>Info mediche:</b> <span id="mediche"></span></p>
 <p><b>Note:</b> <span id="note"></span></p>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBGc8ySEGePDVQi9jZyjyCwETMSdF__rGk",
+  authDomain: "kithopet-nfc.firebaseapp.com",
+  projectId: "kithopet-nfc",
+  storageBucket: "kithopet-nfc.firebasestorage.app",
+  messagingSenderId: "225319373501",
+  appId: "1:225319373501:web:0b1b722101e2cdce0205d4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-// DATABASE BASE (temporaneo)
-const database = {
-  "001": {
-    cane: "Thor",
-    proprietario: "Marco",
-    telefono: "3331234567",
-    mediche: "Allergico al pollo",
-    note: "Non ama altri cani"
-  },
-  "002": {
-    cane: "Kira",
-    proprietario: "Luca",
-    telefono: "3399876543",
-    mediche: "Nessuna",
-    note: "Molto socievole"
+async function caricaDati() {
+  const ref = doc(db, "pets", id);
+  const snap = await getDoc(ref);
+
+  if (snap.exists()) {
+    const dati = snap.data();
+
+    document.getElementById("nomeCane").innerText = dati.nomeCane;
+    document.getElementById("nomeProp").innerText = dati.proprietario;
+    document.getElementById("telefono").innerText = dati.telefono;
+    document.getElementById("mediche").innerText = dati.mediche;
+    document.getElementById("note").innerText = dati.note;
+
+  } else {
+    document.body.innerHTML = "<h2>Dati non trovati</h2>";
   }
-};
-
-const dati = database[id];
-
-if (dati) {
-  document.getElementById("nomeCane").innerText = dati.cane;
-  document.getElementById("nomeProp").innerText = dati.proprietario;
-  document.getElementById("telefono").innerText = dati.telefono;
-  document.getElementById("mediche").innerText = dati.mediche;
-  document.getElementById("note").innerText = dati.note;
-} else {
-  document.body.innerHTML = "<h2>Dati non trovati</h2>";
 }
+
+caricaDati();
 </script>
 
 </body>
