@@ -32,15 +32,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+const keyUrl = urlParams.get("key");
+
 console.log("ID:", id);
+console.log("KEY URL:", keyUrl);
 
 async function caricaDati() {
   const ref = doc(db, "pets", id);
   const snap = await getDoc(ref);
 
-  if (snap.exists()) {
+  if (!snap.exists()) {
+  document.body.innerHTML = "Pet non trovato";
+  throw new Error("No data");
+}
     const dati = snap.data();
 
       document.getElementById("nomeCane").value = dati.nomeCane;
@@ -70,6 +76,11 @@ async function salvaDati() {
   });
 
   alert("Dati salvati");
+
+  if (data.key !== keyUrl) {
+  alert("Non autorizzato");
+  return;
+  }
 }
 
 window.salvaDati = salvaDati;
