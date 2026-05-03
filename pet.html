@@ -14,11 +14,9 @@
 <p><b>Info mediche:</b> <span id="mediche"></span></p>
 <p><b>Note:</b> <span id="note"></span></p>
 
-<button onclick="salvaDati()">Salva</button>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBGc8ySEGePDVQi9jZyjyCwETMSdF__rGk",
@@ -27,25 +25,6 @@ const firebaseConfig = {
   storageBucket: "kithopet-nfc.firebasestorage.app",
   messagingSenderId: "225319373501",
   appId: "1:225319373501:web:0b1b722101e2cdce0205d4"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-const urlParams = new URLSearchParams(window.location.search);
-const id = urlParams.get("id");
-const keyUrl = urlParams.get("key");
-
-let dati = null; // 🔥 salvati globalmente
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -75,28 +54,5 @@ async function caricaDati() {
 caricaDati();
 </script>
 
-async function salvaDati() {
-
-  // 🔐 BLOCCO PRIMA DI SALVARE
-  if (!dati || dati.key !== keyUrl) {
-    alert("Non autorizzato");
-    return;
-  }
-
-  const ref = doc(db, "pets", id);
-
-  await setDoc(ref, {
-    nomeCane: document.getElementById("nomeCane").value,
-    proprietario: document.getElementById("nomeProp").value,
-    telefono: document.getElementById("telefono").value,
-    mediche: document.getElementById("mediche").value,
-    note: document.getElementById("note").value,
-    key: dati.key // 🔥 IMPORTANTISSIMO: NON perderla
-  });
-
-  alert("Dati salvati");
- 
-}
-
-window.salvaDati = salvaDati;
-</script>
+</body>
+</html>
