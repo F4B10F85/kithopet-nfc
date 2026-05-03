@@ -14,7 +14,11 @@
 <p>Info mediche: <input id="mediche"></p>
 <p>Note: <input id="note"></p>
 
-<button onclick="salvaDati()">Salva</button>
+<br>
+
+<button onclick="salvaDati()" style="padding:10px; background:#00645a; color:white; border:none; border-radius:8px;">
+  Salva
+</button>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
@@ -55,6 +59,7 @@ async function caricaDati() {
     return;
   }
 
+  // riempi input
   document.getElementById("nomeCane").value = dati.nomeCane || "";
   document.getElementById("nomeProp").value = dati.proprietario || "";
   document.getElementById("telefono").value = dati.telefono || "";
@@ -71,7 +76,7 @@ async function salvaDati() {
     telefono: document.getElementById("telefono").value,
     mediche: document.getElementById("mediche").value,
     note: document.getElementById("note").value,
-    key: dati.key // NON PERDERLA
+    key: dati.key // NON perderla
   });
 
   alert("Dati salvati");
