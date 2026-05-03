@@ -75,6 +75,9 @@
 
   <a id="chiamaBtn">📞 Chiama proprietario</a>
 
+  <p>📍 Posizione proprietario:</p>
+<div id="map" style="width:100%; height:200px; border-radius:10px; overflow:hidden;"></div>
+
 </div>
 
 <script type="module">
@@ -107,6 +110,23 @@ async function caricaDati() {
 
   const dati = snap.data();
 
+  // 👇 QUI dentro, non fuori
+  if (dati.lat && dati.lng) {
+    document.getElementById("map").innerHTML = `
+      <iframe
+        width="100%"
+        height="200"
+        style="border:0"
+        loading="lazy"
+        allowfullscreen
+        src="https://www.google.com/maps?q=${dati.lat},${dati.lng}&hl=it&z=15&output=embed">
+      </iframe>
+    `;
+  } else {
+    document.getElementById("map").innerHTML = "Posizione non disponibile";
+  }
+
+  // resto dei tuoi dati
   document.getElementById("nomeCane").innerText = dati.nomeCane || "";
   document.getElementById("nomeProp").innerText = dati.proprietario || "";
   document.getElementById("telefono").innerText = dati.telefono || "";
@@ -125,6 +145,7 @@ async function caricaDati() {
 }
 
 caricaDati();
+  
 </script>
 
 </body>
