@@ -58,17 +58,23 @@ caricaDati();
 import { setDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";  
 
 async function salvaDati() {
-  const ref = doc(db, "pets", id);
+  try {
+    const ref = doc(db, "pets", id);
 
-  await setDoc(ref, {
-    nomeCane: document.getElementById("nomeCane").value,
-    proprietario: document.getElementById("nomeProp").value,
-    telefono: document.getElementById("telefono").value,
-    mediche: document.getElementById("mediche").value,
-    note: document.getElementById("note").value
-  });
+    await setDoc(ref, {
+      nomeCane: document.getElementById("nomeCane").value,
+      proprietario: document.getElementById("nomeProp").value,
+      telefono: document.getElementById("telefono").value,
+      mediche: document.getElementById("mediche").value,
+      note: document.getElementById("note").value
+    });
 
-  alert("Dati salvati");
+    alert("SALVATO DAVVERO");
+
+  } catch (e) {
+    alert("ERRORE: " + e);
+    console.error(e);
+  }
 }
   
 </script>
