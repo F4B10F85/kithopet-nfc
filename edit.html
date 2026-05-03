@@ -116,9 +116,12 @@ async function caricaDati() {
   const snap = await getDoc(ref);
 
   if (!snap.exists()) {
-    document.body.innerHTML = "Pet non trovato";
-    return;
-  }
+  // 👉 primo utilizzo: nessun dato ancora
+  dati = { key: keyUrl };
+  
+  // NON bloccare la pagina
+  return;
+}
 
   dati = snap.data();
 
@@ -138,11 +141,6 @@ async function caricaDati() {
 
 async function salvaDati() {
 
-  if (!dati || dati.key !== keyUrl) {
-    alert("Non autorizzato");
-    return;
-  }
-
   const ref = doc(db, "pets", id);
 
   await setDoc(ref, {
@@ -153,7 +151,9 @@ async function salvaDati() {
     note: document.getElementById("note").value,
     lat: parseFloat(document.getElementById("lat").value) || null,
     lng: parseFloat(document.getElementById("lng").value) || null,
-    key: dati.key
+
+    // 🔑 QUI STA LA MAGIA
+    key: (dati && dati.key) ? dati.key : keyUrl
   });
 
   alert("Dati salvati");
