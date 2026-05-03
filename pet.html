@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dati Animale</title>
+</head>
+
+<body style="font-family: Arial; padding:20px;">
+
+<h2 id="nomeCane"></h2>
+
+<p><b>Proprietario:</b> <span id="nomeProp"></span></p>
+<p><b>Telefono:</b> <span id="telefono"></span></p>
+<p><b>Info mediche:</b> <span id="mediche"></span></p>
+<p><b>Note:</b> <span id="note"></span></p>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// DATABASE BASE (temporaneo)
+const database = {
+  "001": {
+    cane: "Thor",
+    proprietario: "Marco",
+    telefono: "3331234567",
+    mediche: "Allergico al pollo",
+    note: "Non ama altri cani"
+  },
+  "002": {
+    cane: "Kira",
+    proprietario: "Luca",
+    telefono: "3399876543",
+    mediche: "Nessuna",
+    note: "Molto socievole"
+  }
+};
+
+const dati = database[id];
+
+if (dati) {
+  document.getElementById("nomeCane").innerText = dati.cane;
+  document.getElementById("nomeProp").innerText = dati.proprietario;
+  document.getElementById("telefono").innerText = dati.telefono;
+  document.getElementById("mediche").innerText = dati.mediche;
+  document.getElementById("note").innerText = dati.note;
+} else {
+  document.body.innerHTML = "<h2>Dati non trovati</h2>";
+}
+</script>
+
+</body>
+</html>
