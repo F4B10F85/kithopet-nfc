@@ -55,12 +55,12 @@ async function caricaDati() {
 
 caricaDati();
 
-import { updateDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";  
+import { setDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";  
 
 async function salvaDati() {
   const ref = doc(db, "pets", id);
 
-  await updateDoc(ref, {
+  await setDoc(ref, {
     nomeCane: document.getElementById("nomeCane").value,
     proprietario: document.getElementById("nomeProp").value,
     telefono: document.getElementById("telefono").value,
