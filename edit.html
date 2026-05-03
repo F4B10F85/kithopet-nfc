@@ -77,6 +77,14 @@
   <p>📝 Note:</p>
   <input id="note">
 
+  <p>📍 Latitudine:</p>
+  <input id="lat">
+  
+  <p>📍 Longitudine:</p>
+  <input id="lng">
+
+<button onclick="usaPosizione()">📍 Usa posizione attuale</button>
+  
   <button onclick="salvaDati()">Salva</button>
 
 </div>
@@ -137,6 +145,8 @@ async function salvaDati() {
     telefono: document.getElementById("telefono").value,
     mediche: document.getElementById("mediche").value,
     note: document.getElementById("note").value,
+    document.getElementById("lat").value = dati.lat || "",
+    document.getElementById("lng").value = dati.lng || "",
     key: dati.key // NON perderla o ti autodistruggi
   });
 
