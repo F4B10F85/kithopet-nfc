@@ -43,11 +43,23 @@ async function caricaDati() {
 
   const dati = snap.data();
 
-  document.getElementById("nomeCane").innerText = dati.nomeCane || "";
-  document.getElementById("nomeProp").innerText = dati.proprietario || "";
-  document.getElementById("telefono").innerText = dati.telefono || "";
-  document.getElementById("mediche").innerText = dati.mediche || "";
-  document.getElementById("note").innerText = dati.note || "";
+// 🔥 QUI gestisci il bottone
+const btn = document.getElementById("chiamaBtn");
+
+if (dati.telefono) {
+  btn.href = "tel:" + dati.telefono;
+} else {
+  btn.innerText = "Numero non disponibile";
+  btn.style.pointerEvents = "none";
+  btn.style.opacity = "0.5";
+}
+
+// resto dei dati
+document.getElementById("nomeCane").innerText = dati.nomeCane || "";
+document.getElementById("nomeProp").innerText = dati.proprietario || "";
+document.getElementById("telefono").innerText = dati.telefono || "";
+document.getElementById("mediche").innerText = dati.mediche || "";
+document.getElementById("note").innerText = dati.note || "";
 }
 
 caricaDati();
