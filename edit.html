@@ -162,6 +162,24 @@ async function salvaDati() {
 window.salvaDati = salvaDati;
 
 caricaDati();
+
+function usaPosizione() {
+  if (!navigator.geolocation) {
+    alert("Geolocalizzazione non supportata");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(pos => {
+    document.getElementById("lat").value = pos.coords.latitude;
+    document.getElementById("lng").value = pos.coords.longitude;
+  }, () => {
+    alert("Impossibile ottenere la posizione");
+  });
+}
+
+// 👇 QUESTA È LA CHIAVE DELLA VITA
+window.usaPosizione = usaPosizione;
+  
 </script>
 
 </body>
