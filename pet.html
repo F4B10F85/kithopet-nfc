@@ -14,6 +14,8 @@
 <p><b>Info mediche:</b> <span id="mediche"></span></p>
 <p><b>Note:</b> <span id="note"></span></p>
 
+<a id="chiamaBtn">📞 Chiama proprietario</a>
+  
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
@@ -49,6 +51,8 @@ async function caricaDati() {
 }
 
 caricaDati();
+
+document.getElementById("chiamaBtn").href = "tel:" + dati.telefono;  
 </script>
 
 </body>
