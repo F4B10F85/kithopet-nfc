@@ -2,21 +2,23 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dati Animale</title>
+  <title>Modifica Dati</title>
 </head>
 
 <body style="font-family: Arial; padding:20px;">
 
-<h2 id="nomeCane"></h2>
+<h2><input id="nomeCane"></h2>
 
-<p><b>Proprietario:</b> <span id="nomeProp"></span></p>
-<p><b>Telefono:</b> <span id="telefono"></span></p>
-<p><b>Info mediche:</b> <span id="mediche"></span></p>
-<p><b>Note:</b> <span id="note"></span></p>
+<p>Proprietario: <input id="nomeProp"></p>
+<p>Telefono: <input id="telefono"></p>
+<p>Info mediche: <input id="mediche"></p>
+<p>Note: <input id="note"></p>
+
+<button onclick="salvaDati()">Salva</button>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBGc8ySEGePDVQi9jZyjyCwETMSdF__rGk",
@@ -32,6 +34,9 @@ const db = getFirestore(app);
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get("id");
+const keyUrl = urlParams.get("key");
+
+let dati = null;
 
 async function caricaDati() {
   const ref = doc(db, "pets", id);
@@ -42,14 +47,37 @@ async function caricaDati() {
     return;
   }
 
-  const dati = snap.data();
+  dati = snap.data();
 
-  document.getElementById("nomeCane").innerText = dati.nomeCane || "";
-  document.getElementById("nomeProp").innerText = dati.proprietario || "";
-  document.getElementById("telefono").innerText = dati.telefono || "";
-  document.getElementById("mediche").innerText = dati.mediche || "";
-  document.getElementById("note").innerText = dati.note || "";
+  // 🔐 controllo accesso
+  if (dati.key !== keyUrl) {
+    document.body.innerHTML = "Accesso negato";
+    return;
+  }
+
+  document.getElementById("nomeCane").value = dati.nomeCane || "";
+  document.getElementById("nomeProp").value = dati.proprietario || "";
+  document.getElementById("telefono").value = dati.telefono || "";
+  document.getElementById("mediche").value = dati.mediche || "";
+  document.getElementById("note").value = dati.note || "";
 }
+
+async function salvaDati() {
+  const ref = doc(db, "pets", id);
+
+  await setDoc(ref, {
+    nomeCane: document.getElementById("nomeCane").value,
+    proprietario: document.getElementById("nomeProp").value,
+    telefono: document.getElementById("telefono").value,
+    mediche: document.getElementById("mediche").value,
+    note: document.getElementById("note").value,
+    key: dati.key // NON PERDERLA
+  });
+
+  alert("Dati salvati");
+}
+
+window.salvaDati = salvaDati;
 
 caricaDati();
 </script>
