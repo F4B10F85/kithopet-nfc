@@ -45,9 +45,14 @@
       margin-top: 15px;
     }
 
+    .call-wrapper {
+      width: 100%;
+    }
+    
     .call-btn {
       display: block;
       width: 100%;
+      box-sizing: border-box; /* 🔥 QUESTO ERA IL COLPEVOLE */
       text-align: center;
       padding: 12px;
       border-radius: 10px;
@@ -55,7 +60,6 @@
       font-weight: bold;
       background: #ff3b30;
       color: white;
-      margin-top: 10px;
     }
 
   </style>
@@ -80,7 +84,9 @@
   <span id="note"></span>
 
   <div class="map-container">
-    <a id="chiamaBtn" class="call-btn">📞 Chiama proprietario</a>
+    <div class="call-wrapper">
+      <a id="chiamaBtn" class="call-btn">📞 Chiama proprietario</a>
+    </div>
   </div>
 
   <p>📍 Posizione proprietario:</p>
